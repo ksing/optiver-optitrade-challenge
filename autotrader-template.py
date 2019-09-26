@@ -4,7 +4,7 @@ REMOTE_IP = "188.166.115.7"
 UDP_ANY_IP = ""
 
 USERNAME = "optiver-python-template"
-
+PASSWORD = "password-goes-here"
 
 # -------------------------------------
 # Auto trader
@@ -38,6 +38,10 @@ def process_message(message):
         traded_volume = int(comps[4].split("=")[1])
 
     if type == "TYPE=ORDER_ACK":
+        if comps[1].split("=")[0] == "ERROR":
+            print("Order was rejected because of error {err}.".format(err=comps[1].split("=")[1]))
+            return
+
         feedcode = comps[1].split("=")[1]
         traded_price = float(comps[2].split("=")[1])
 
@@ -96,8 +100,8 @@ def send_order(target_feedcode, action, target_price, volume):
     :param volume: Volume you want to trade at. Please start with 10 and go from there. Don't go crazy!
     :return:
     """
-    order_message = "TYPE=ORDER|USERNAME={user}|FEEDCODE={fc}|ACTION={ac}|PRICE={pr}|VOLUME={vol}".format(
-        user=USERNAME, fc=target_feedcode, ac=action, pr=target_price, vol=volume)
+    order_message = "TYPE=ORDER|USERNAME={user}|PASSWORD={pw}|FEEDCODE={fc}|ACTION={ac}|PRICE={pr}|VOLUME={vol}".format(
+        user=USERNAME, pw=PASSWORD, fc=target_feedcode, ac=action, pr=target_price, vol=volume)
 
     eml_sock.sendto(order_message.encode(), (REMOTE_IP, EML_UDP_PORT_REMOTE))
 
@@ -113,3 +117,4 @@ def send_order(target_feedcode, action, target_price, volume):
 
 if __name__ == "__main__":
     start_autotrader()
+    send_order("SP-FUTURE", "BUY", 2900, 10)

@@ -109,7 +109,8 @@ In order to trade, you need to send an order to the exchange (via UDP). Every or
 | Field | Description | Value
 -------|--------------|---------------
 | TYPE | The type of message | Fixed value: `ORDER` |
-| USERNAME | The username associated with the order (your team name, do not change it). | String |
+| USERNAME | The unique username identifying your team. Can be found on the credential section  of the handout. | String |
+| PASSWORD| The password associated with your username. Can be found on the credential section  of the handout. | String |
 | FEEDCODE | The instrument's feedcode | String |
 | ACTION | The order action | String, `BUY` or `SELL` | 
 | PRICE | The order price | Float |
@@ -131,6 +132,6 @@ Example: ```TYPE=ORDER|USERNAME=Optiver|FEEDCODE=FOOBAR|ACTION=BUY|PRICE=22.0|VO
 Examples:
 - ```TYPE=ORDER_ACK|FEEDCODE=FOOBAR|PRICE=22.0|TRADED_VOLUME=100```
 - ```TYPE=ORDER_ACK|FEEDCODE=FOOBAR|TRADED_VOLUME=0```
-- ```TYPE=ORDER_ACK|ERROR=error message```
+- ```TYPE=ORDER_ACK|ERROR=Invalid login credentials supplied```
 
 
