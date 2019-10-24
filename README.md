@@ -1,6 +1,6 @@
-# Optiver HackDelft Challenge
+# Optiver OptiTrade Challenge
 
-Look at your positions here: http://188.166.115.7/
+Look at your positions here: http://178.62.36.224:5006/optitrade
 
 During this challenge, you will be listening to an exchange, analyse its data and then,
 if you'd like, develop an automated trading system. Of course you are also welcome to
@@ -19,14 +19,14 @@ The system is composed by:
   * The exchange, broadcasting through **UDP** the public information messages. To listen to this information,
     connect to:
     
-    ```ip: 188.166.115.7, port: 7001```
+    ```ip: 178.62.36.224, port: 7001```
     
     This is used for the following message types: ```PRICE``` and ```TRADE``` (see the protocol section for more info).
 
   * The exchange execution gateway, with which you communicate in order to send orders &mdash; and hopefully trade!
     To send orders to the exchange, and listen for a reply, connect to (also **UDP**):
     
-    ```ip: 188.166.115.7, port: 8001```
+    ```ip: 178.62.36.224, port: 8001```
     
     This is used for the following message types: ```ORDER``` and ```ORDER_ACK``` (see the protocol section for more info).
 
@@ -49,7 +49,7 @@ You can find the files here in this repo:
 Trading is one thing, but of course you also want to know how much money you have made or lost, right?
 For that, it might be smart to track your own profit and loss (PnL), alongside your positions (which is your risk).
 
-You can also look at your official PnL here: http://188.166.115.7/
+You can also look at your official PnL here: http://178.62.36.224:5006/optitrade
 
 **All of you are trading on the same exchange, which means that you will compete for the same opportunities...**
 
