@@ -47,7 +47,7 @@ You can find the files here in this repo:
 ### Measure Your Performance
 
 Trading is one thing, but of course you also want to know how much money you have made or lost, right?
-For that, it might be smart to track your own profit and loss (PnL), alongside your positions (which is your risk).
+For that, it might be smart to track your own profit and loss (PnL), alongside your positions (which is your risk). You can visualize the order book, or come up with other metrics that can help you find an edge. Give it some thought.
 
 You can also look at your official PnL here: http://178.62.36.224:5006/optitrade
 
