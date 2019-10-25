@@ -116,7 +116,7 @@ In order to trade, you need to send an order to the exchange (via UDP). Every or
 | PRICE | The order price | Float |
 | VOLUME | The order volume | Int |
 
-Example: ```TYPE=ORDER|USERNAME=Optiver|FEEDCODE=FOOBAR|ACTION=BUY|PRICE=22.0|VOLUME=100```
+Example: ```TYPE=ORDER|USERNAME=Optiver|PASSWORD=My_Password|FEEDCODE=FOOBAR|ACTION=BUY|PRICE=22.0|VOLUME=100```
 
 
 #### Order ack message fields
