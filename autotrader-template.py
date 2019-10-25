@@ -1,6 +1,6 @@
 import socket
 
-REMOTE_IP = "188.166.115.7"
+REMOTE_IP = "178.62.36.224"
 UDP_ANY_IP = ""
 
 USERNAME = "optiver-python-template"
