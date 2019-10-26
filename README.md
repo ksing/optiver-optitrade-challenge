@@ -6,7 +6,7 @@ During this challenge, you will be listening to an exchange, analyse its data an
 if you'd like, develop an automated trading system. Of course you are also welcome to
 do whatever else comes to your mind! Use your imagination!
 
-The exchange is broadcasting prices and trades on two famous indices (a type of stock):
+The exchange is broadcasting prices and trades on two famous stock market indices:
 S&P500 (SP) and Eurostoxx (ESX). That means you see how the price changes over time for those indices,
 and what trades from the outside world are made (this is simulated). Your goal is to look at the data and come up with
 clever strategies to (hopefully) make money!
@@ -134,4 +134,9 @@ Examples:
 - ```TYPE=ORDER_ACK|FEEDCODE=FOOBAR|TRADED_VOLUME=0```
 - ```TYPE=ORDER_ACK|ERROR=Invalid login credentials supplied```
 
+## Bankruptcy
 
+You start with 20,000 euros. If you end up losing all of it, you go bankrupt!
+When this happens, your team is out of the game for 10 minutes. Use this time wisely to rethink your strategy and feel free to ask the Optiverians for help!
+
+After these 10 minutes, you'll start again with 20,000 euros.
