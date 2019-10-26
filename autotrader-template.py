@@ -7,6 +7,7 @@ UDP_ANY_IP = ""
 USERNAME = "optiver-python-template"
 PASSWORD = "password-goes-here"
 
+
 # -------------------------------------
 # EML code (EML is execution market link)
 # -------------------------------------
@@ -16,6 +17,7 @@ EML_UDP_PORT_REMOTE = 8001
 
 eml_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 eml_sock.bind((UDP_ANY_IP, EML_UDP_PORT_LOCAL))
+
 
 # -------------------------------------
 # IML code (IML is information market link)
@@ -116,6 +118,7 @@ def send_order(target_feedcode, action, target_price, volume):
         user=USERNAME, pw=PASSWORD, fc=target_feedcode, ac=action, pr=target_price, vol=volume)
     print('sending order: '.format(order_message))
     eml_sock.sendto(order_message.encode(), (REMOTE_IP, EML_UDP_PORT_REMOTE))
+
 
 # -------------------------------------
 # Main
