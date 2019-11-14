@@ -61,7 +61,7 @@ def handle_message(message):
     comps = message.split("|")
 
     if len(comps) == 0:
-        print("Invalid message received: {msg}".format(msg=message))
+        print(f"Invalid message received: {message}")
         return
 
     type = comps[0]
@@ -88,7 +88,8 @@ def handle_message(message):
     if type == "TYPE=ORDER_ACK":
 
         if comps[1].split("=")[0] == "ERROR":
-            print("Order was rejected because of error {err}.".format(err=comps[1].split("=")[1]))
+            error_message = comps[1].split("=")[1]
+            print(f"Order was rejected because of error {error_message}.")
             return
 
         feedcode = comps[1].split("=")[1]
