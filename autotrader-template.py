@@ -74,7 +74,7 @@ def handle_message(message):
         ask_price = float(comps[4].split("=")[1])
         ask_volume = int(comps[5].split("=")[1])
 
-        print(f"PRICE: product: {feedcode} bid: {bid_volume}@{bid_price} ask: {ask_volume}@{ask_price}")
+        print(f"[PRICE] product: {feedcode} bid: {bid_volume}@{bid_price} ask: {ask_volume}@{ask_price}")
 
     if type == "TYPE=TRADE":
 
@@ -83,7 +83,7 @@ def handle_message(message):
         traded_price = float(comps[3].split("=")[1])
         traded_volume = int(comps[4].split("=")[1])
 
-        print(f"TRADE: product: {feedcode} side: {side} price: {traded_price} volume: {traded_volume}")
+        print(f"[TRADE] product: {feedcode} side: {side} price: {traded_price} volume: {traded_volume}")
 
     if type == "TYPE=ORDER_ACK":
 
@@ -102,7 +102,7 @@ def handle_message(message):
 
         traded_volume = int(comps[3].split("=")[1])
 
-        print(f"ORDER_ACK: feedcode: {feedcode}, price: {traded_price}, volume: {traded_volume}")
+        print(f"[ORDER_ACK] feedcode: {feedcode}, price: {traded_price}, volume: {traded_volume}")
 
 
 def send_order(target_feedcode, action, target_price, volume):
@@ -120,7 +120,7 @@ def send_order(target_feedcode, action, target_price, volume):
     - send_order("SP-FUTURE", "BUY", 3000, 100)
     """
     order_message = f"TYPE=ORDER|USERNAME={USERNAME}|PASSWORD={PASSWORD}|FEEDCODE={target_feedcode}|ACTION={action}|PRICE={target_price}|VOLUME={volume}"
-    print(f"SENDING ORDER: {order_message}")
+    print(f"[SENDING ORDER] {order_message}")
     eml_sock.sendto(order_message.encode(), (REMOTE_IP, EML_UDP_PORT_REMOTE))
 
 
