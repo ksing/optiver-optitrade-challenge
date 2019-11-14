@@ -95,7 +95,8 @@ def handle_message(message):
         feedcode = comps[1].split("=")[1]
         traded_price = float(comps[2].split("=")[1])
 
-        # This is only 0 if price is not there, and volume became 0 instead
+        # This is only 0 if price is not there, and volume became 0 instead.
+        # Possible cause: someone else got the trade instead of you.
         if traded_price == 0:
             print(f"Unable to get trade on: {feedcode}")
             return
