@@ -39,8 +39,10 @@ def start_autotrader():
     subscribe()
     event_listener()
 
+
 def subscribe():
     iml_sock.sendto(IML_INIT_MESSAGE.encode(), (REMOTE_IP, IML_UDP_PORT_REMOTE))
+
 
 def event_listener():
     """
@@ -53,6 +55,7 @@ def event_listener():
             data, addr = socket.recvfrom(1024)
             message = data.decode('utf-8')
             handle_message(message)
+
 
 def handle_message(message):
     comps = message.split("|")
@@ -71,7 +74,7 @@ def handle_message(message):
         ask_price = float(comps[4].split("=")[1])
         ask_volume = int(comps[5].split("=")[1])
 
-        print("PRICE: product: {} bid: {}@{} ask: {}@{}".format(feedcode, bid_volume, bid_price, ask_volume, ask_price))
+        print(f"PRICE: product: {feedcode} bid: {bid_volume}@{bid_price} ask: {ask_volume}@{ask_price}")
 
     if type == "TYPE=TRADE":
 
@@ -80,7 +83,7 @@ def handle_message(message):
         traded_price = float(comps[3].split("=")[1])
         traded_volume = int(comps[4].split("=")[1])
 
-        print("TRADE: product: {} side: {} price: {} volume: {}".format(feedcode, side, traded_price, traded_volume))
+        print(f"TRADE: product: {feedcode} side: {side} price: {traded_price} volume: {traded_volume}")
 
     if type == "TYPE=ORDER_ACK":
 
@@ -93,13 +96,13 @@ def handle_message(message):
 
         # This is only 0 if price is not there, and volume became 0 instead
         if traded_price == 0:
-            print("Unable to get trade on: {fc}".format(fc=feedcode))
+            print(f"Unable to get trade on: {feedcode}")
             return
 
         traded_volume = int(comps[3].split("=")[1])
 
-        print("ORDER_ACK: feedcode: {fc}, price: {pr}, volume: {vol}".format(
-            fc=feedcode, pr=traded_price, vol=traded_volume))
+        print(f"ORDER_ACK: feedcode: {feedcode}, price: {traded_price}, volume: {traded_volume}")
+
 
 def send_order(target_feedcode, action, target_price, volume):
     """
@@ -115,9 +118,8 @@ def send_order(target_feedcode, action, target_price, volume):
     If you want to buy  100 SP-FUTURES at a price of 3000:
     - send_order("SP-FUTURE", "BUY", 3000, 100)
     """
-    order_message = "TYPE=ORDER|USERNAME={user}|PASSWORD={pw}|FEEDCODE={fc}|ACTION={ac}|PRICE={pr}|VOLUME={vol}".format(
-        user=USERNAME, pw=PASSWORD, fc=target_feedcode, ac=action, pr=target_price, vol=volume)
-    print('sending order: '.format(order_message))
+    order_message = f"TYPE=ORDER|USERNAME={USERNAME}|PASSWORD={PASSWORD}|FEEDCODE={target_feedcode}|ACTION={action}|PRICE={target_price}|VOLUME={volume}"
+    print(f"SENDING ORDER: {order_message}")
     eml_sock.sendto(order_message.encode(), (REMOTE_IP, EML_UDP_PORT_REMOTE))
 
 
