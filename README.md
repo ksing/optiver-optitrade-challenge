@@ -62,10 +62,6 @@ For that, it might be smart to track your own profit and loss (PnL), alongside y
 
 You can also look at your official PnL here: http://178.62.36.224:5006/optitrade
 
-**All of you are trading on the same exchange, which means that you will compete for the same opportunities...**
-
-**Last thing: every trade will impact your position &mdash; keep an eye on it to manage your risk exposure!**
-
 
 ### Bankruptcy [IMPORTANT]
 
@@ -74,6 +70,9 @@ When this happens, your team is out of the game for **10 minutes**. Use this tim
 
 After these 10 minutes, you'll start again with 20,000 euros.
 
+**All of you are trading on the same exchange, which means that you will compete for the same opportunities...**
+
+**Last thing: every trade will impact your position &mdash; keep an eye on it to manage your risk exposure!**
 
 ## Protocol specification
 The communication from and towards the exchange is done via a text-based, ASCII, protocol.
