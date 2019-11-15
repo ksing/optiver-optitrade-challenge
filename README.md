@@ -16,6 +16,8 @@ clever strategies to (hopefully) make money!
 
 Before you start, **have a look at [OptiverChallenge_HowTo.pdf](https://github.com/jundl77/optiver-optitrade-challenge/blob/master/OptiverChallenge_HowTo.pdf)** for some basic background knowledge on what an exchange is, how an order book works, and how you are supposed to interpret bid and ask prices that you recieve from the exchange.
 
+We will go over this in our workshop, so we very much encourage to stop by.
+
 
 ### Basic Terminology
 - ```bid price```: The price that someone else is willing to *buy* at. You can **sell to them** at this price.
