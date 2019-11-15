@@ -23,7 +23,7 @@ Before you start, **have a look at [OptiverChallenge_HowTo.pdf](https://github.c
 
 
 
-### The Exchange
+## The Exchange
 
 The system is composed by:
 
