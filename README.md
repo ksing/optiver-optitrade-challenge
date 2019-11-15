@@ -67,6 +67,12 @@ You can also look at your official PnL here: http://178.62.36.224:5006/optitrade
 **Last thing: every trade will impact your position &mdash; keep an eye on it to manage your risk exposure!**
 
 
+### Bankruptcy [IMPORTANT]
+
+You start with **20,000 EUR**. If you end up losing all of it, you go bankrupt!
+When this happens, your team is out of the game for **10 minutes**. Use this time wisely to rethink your strategy and feel free to ask the Optiverians for help!
+
+After these 10 minutes, you'll start again with 20,000 euros.
 
 
 ## Protocol specification
@@ -144,10 +150,3 @@ Examples:
 - ```TYPE=ORDER_ACK|FEEDCODE=FOOBAR|PRICE=22.0|TRADED_VOLUME=100```
 - ```TYPE=ORDER_ACK|FEEDCODE=FOOBAR|TRADED_VOLUME=0```
 - ```TYPE=ORDER_ACK|ERROR=Invalid login credentials supplied```
-
-## Bankruptcy
-
-You start with 20,000 euros. If you end up losing all of it, you go bankrupt!
-When this happens, your team is out of the game for 10 minutes. Use this time wisely to rethink your strategy and feel free to ask the Optiverians for help!
-
-After these 10 minutes, you'll start again with 20,000 euros.
