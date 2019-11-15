@@ -16,7 +16,7 @@ clever strategies to (hopefully) make money!
 
 Before you start, **have a look at [OptiverChallenge_HowTo.pdf](https://github.com/jundl77/optiver-optitrade-challenge/blob/master/OptiverChallenge_HowTo.pdf)** for some basic background knowledge on what an exchange is, how an order book works, and how you are supposed to interpret bid and ask prices that you recieve from the exchange.
 
-We will go over this in our workshop as well in much more detail, so we very much encourage to stop by.
+**Important:** We will go over this in our workshop as well in much more detail, so we very much encourage to stop by.
 
 
 ### Basic Terminology
