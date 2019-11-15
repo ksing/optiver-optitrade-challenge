@@ -12,6 +12,17 @@ and what trades from the outside world are made (this is simulated). Your goal i
 clever strategies to (hopefully) make money!
 
 
+## Before you start
+
+Before you start, **have a look at [OptiverChallenge_HowTo.pdf](https://github.com/jundl77/optiver-optitrade-challenge/blob/master/OptiverChallenge_HowTo.pdf)** for some basic background knowledge on what an exchange is, how an order book works, and how you are supposed to interpret bid and ask prices that you recieve from the exchange.
+
+
+### Basic Terminology
+- ```bid price```: The price that someone else is willing to *buy* at. You can **sell to them** at this price.
+- ```ask price```: The price that someone else is willing to *sell* at. You can **buy from them** at this price.
+
+
+
 ### The Exchange
 
 The system is composed by:
