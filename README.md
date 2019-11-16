@@ -1,5 +1,7 @@
 # Optiver OptiTrade Challenge
 
+**VERY IMPORTANT**: Come by our booth to get login credentials for the exchange.
+
 Look at your positions here: http://178.62.36.224:5006/optitrade
 
 During this challenge, you will be listening to an exchange, analyse its data and then,
@@ -13,8 +15,6 @@ clever strategies to (hopefully) make money!
 
 
 ## Before you start
-
-**VERY IMPORTANT**: Come by our booth to get login credentials for the exchange.
 
 Before you start, **have a look at [OptiverChallenge_HowTo.pdf](https://github.com/jundl77/optiver-optitrade-challenge/blob/master/OptiverChallenge_HowTo.pdf)** for some basic background knowledge on what an exchange is, how an order book works, and how you are supposed to interpret bid and ask prices that you recieve from the exchange.
 
