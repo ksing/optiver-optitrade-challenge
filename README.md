@@ -18,6 +18,8 @@ Before you start, **have a look at [OptiverChallenge_HowTo.pdf](https://github.c
 
 **Important:** We will go over this in our workshop at **13:40** in the **L3 Lecture Theater** as well in much more detail, so we very much encourage to stop by.
 
+Wanna know what we do? Watch this video: https://www.youtube.com/watch?v=gm7SrS9bs3s
+
 ### Basic Terminology
 - ```bid price```: The price that someone else is willing to *buy* at. You can **sell to them** at this price.
 - ```ask price```: The price that someone else is willing to *sell* at. You can **buy from them** at this price.
