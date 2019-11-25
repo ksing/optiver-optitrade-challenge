@@ -1,133 +1,32 @@
-import socket
-import select
+#!/usr/bin/env python3.6
 
-REMOTE_IP = "172.31.18.231"
-UDP_ANY_IP = ""
+from base_autotrader_client import BaseAutotrader
 
-USERNAME = "TeamXX"
-PASSWORD = ""
+USERNAME = "TeamXX"  # Change this to team name from user credentials
+PASSWORD = "TeamPassword"  # Change this to team password from user credentials
 
 
-# -------------------------------------
-# EML code (EML is execution market link)
-# -------------------------------------
-
-EML_UDP_PORT_LOCAL = 8078
-EML_UDP_PORT_REMOTE = 8001
-
-eml_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-eml_sock.bind((UDP_ANY_IP, EML_UDP_PORT_LOCAL))
-
-
-# -------------------------------------
-# IML code (IML is information market link)
-# -------------------------------------
-
-IML_UDP_PORT_LOCAL = 7078
-IML_UDP_PORT_REMOTE = 7001
-IML_INIT_MESSAGE = "TYPE=SUBSCRIPTION_REQUEST"
-
-iml_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-iml_sock.bind((UDP_ANY_IP, IML_UDP_PORT_LOCAL))
-
-
-# -------------------------------------
-# Auto trader
-# -------------------------------------
-
-def start_autotrader():
-    subscribe()
-    event_listener()
-
-
-def subscribe():
-    iml_sock.sendto(IML_INIT_MESSAGE.encode(), (REMOTE_IP, IML_UDP_PORT_REMOTE))
-
-
-def event_listener():
+class Autotrader(BaseAutotrader):
     """
-    Wait for messages from the exchange and
-    call handle_message on each of them.
+    This is the only class you need to change - in particular, on_* methods. You may initialize new instance variables
+     in the __init__ method, if you like.
     """
-    while True:
-        ready_socks,_,_ = select.select([iml_sock, eml_sock], [], [])
-        for socket in ready_socks:
-            data, addr = socket.recvfrom(1024)
-            message = data.decode('utf-8')
-            handle_message(message)
+    
+    def __init__(self):
+        super().__init__(username=USERNAME, password=PASSWORD)
 
+    def on_price_update(self, feedcode, bid_price, bid_volume, ask_price, ask_volume):
+        # This is where you write code to react to price updates
+        pass
 
-def handle_message(message):
-    comps = message.split("|")
+    def on_trade_tick(self, feedcode, side, traded_price, traded_volume):
+        # This is where you write code to react to price updates
+        pass
 
-    if len(comps) == 0:
-        print(f"Invalid message received: {message}")
-        return
+    def on_trade_confirmation(self, position_sp, position_esx, feedcode, traded_price, traded_volume):
+        # This is where you write code to react to price updates
+        pass
 
-    type = comps[0]
-
-    if type == "TYPE=PRICE":
-
-        feedcode = comps[1].split("=")[1]
-        bid_price = float(comps[2].split("=")[1])
-        bid_volume = int(comps[3].split("=")[1])
-        ask_price = float(comps[4].split("=")[1])
-        ask_volume = int(comps[5].split("=")[1])
-
-        print(f"[PRICE] product: {feedcode} bid: {bid_volume}@{bid_price} ask: {ask_volume}@{ask_price}")
-
-    if type == "TYPE=TRADE":
-
-        feedcode = comps[1].split("=")[1]
-        side = comps[2].split("=")[1]
-        traded_price = float(comps[3].split("=")[1])
-        traded_volume = int(comps[4].split("=")[1])
-
-        print(f"[TRADE] product: {feedcode} side: {side} price: {traded_price} volume: {traded_volume}")
-
-    if type == "TYPE=ORDER_ACK":
-
-        if comps[1].split("=")[0] == "ERROR":
-            error_message = comps[1].split("=")[1]
-            print(f"Order was rejected because of error {error_message}.")
-            return
-
-        feedcode = comps[1].split("=")[1]
-        traded_price = float(comps[2].split("=")[1])
-
-        # This is only 0 if price is not there, and volume became 0 instead.
-        # Possible cause: someone else got the trade instead of you.
-        if traded_price == 0:
-            print(f"Unable to get trade on: {feedcode}")
-            return
-
-        traded_volume = int(comps[3].split("=")[1])
-
-        print(f"[ORDER_ACK] feedcode: {feedcode}, price: {traded_price}, volume: {traded_volume}")
-
-
-def send_order(target_feedcode, action, target_price, volume):
-    """
-    Send an order to the exchange.
-
-    :param target_feedcode: The feedcode, either "SP-FUTURE" or "ESX-FUTURE"
-    :param action: "BUY" or "SELL"
-    :param target_price: Price you want to trade at
-    :param volume: Volume you want to trade at. Please start with 10 and go from there. Don't go crazy!
-    :return:
-
-    Example:
-    If you want to buy  100 SP-FUTURES at a price of 3000:
-    - send_order("SP-FUTURE", "BUY", 3000, 100)
-    """
-    order_message = f"TYPE=ORDER|USERNAME={USERNAME}|PASSWORD={PASSWORD}|FEEDCODE={target_feedcode}|ACTION={action}|PRICE={target_price}|VOLUME={volume}"
-    print(f"[SENDING ORDER] {order_message}")
-    eml_sock.sendto(order_message.encode(), (REMOTE_IP, EML_UDP_PORT_REMOTE))
-
-
-# -------------------------------------
-# Main
-# -------------------------------------
 
 if __name__ == "__main__":
-    start_autotrader()
+    Autotrader().start_autotrader()
