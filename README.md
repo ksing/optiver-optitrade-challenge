@@ -30,7 +30,7 @@ The system is composed by:
 Trading is one thing, but of course you also want to know how much money you have made or lost, and how much risk you're taking.
 For that, it might be smart to track your own profit and loss (PnL), alongside your positions (which is your risk).
 
-You can also look at your official PnL [here](http://18.197.147.155:5006/optitrade)
+You can also look at your official PnL [here](http://18.197.147.155:5006/optitrade).
 
 
 ### Bankruptcy
