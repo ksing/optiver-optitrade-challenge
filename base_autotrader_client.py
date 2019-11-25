@@ -9,7 +9,6 @@ UDP_ANY_IP = ""
 
 IML_UDP_PORT_LOCAL = 7078
 IML_UDP_PORT_REMOTE = 7001
-IML_INIT_MESSAGE = "TYPE=SUBSCRIPTION_REQUEST"
 
 EML_UDP_PORT_LOCAL = 8078
 EML_UDP_PORT_REMOTE = 8001
@@ -19,7 +18,7 @@ EML_UDP_PORT_REMOTE = 8001
 # Auto trader
 # -------------------------------------
 class BaseAutotrader:
-    
+
     def __init__(self, username, password):
         self._username = username
         self._password = password
@@ -31,52 +30,63 @@ class BaseAutotrader:
             f"{datetime.now().strftime('%Y-%m-%d')}-{self._username}_replay_file.replay"
         )
         if not os.path.isfile(replay_file):
-            with open(replay_file, 'w+'):
+            with open(replay_file, 'w+') as f:
                 f.write('TradeTime|Feedcode|TradedPrice|TradedVolume')
         self._replay_file_handler = open(replay_file, 'r+')
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self._username})'
 
+    @property
+    def position_sp(self):
+        """You can get your position in S&P with simply reading self.position_sp variable - not as a method"""
+        return self._positions.get('SP-FUTURE', 0)
+
+    @property
+    def position_esx(self):
+        """You can get your position in ESX with simply reading self.position_esx variable"""
+        return self._positions.get('ESX-FUTURE', 0)
+
     def _set_up_eml(self):
-        # EML code (EML is execution market link)
+        """EML code (EML is execution market link)"""
         self._eml_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self._eml_sock.bind((UDP_ANY_IP, EML_UDP_PORT_LOCAL))
 
     def _set_up_iml(self):
-        # IML code (IML is information market link)
+        """IML code (IML is information market link)"""
         self._iml_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self._iml_sock.bind((UDP_ANY_IP, IML_UDP_PORT_LOCAL))
 
-    def start_autotrader(self):
-        self._subscribe()
+    def _start(self):
+        self._iml_subscribe()
         self._read_replay_file()
         self._event_listener()
 
-    def _subscribe(self):
-        self._iml_sock.sendto(IML_INIT_MESSAGE.encode(), (REMOTE_IP, IML_UDP_PORT_REMOTE))
+    def _iml_subscribe(self):
+        iml_init_message = "TYPE=SUBSCRIPTION_REQUEST"
+        self._iml_sock.sendto(iml_init_message.encode(), (REMOTE_IP, IML_UDP_PORT_REMOTE))
 
-    def _event_listener():
-        """
-        Wait for messages from the exchange and call handle_message on each of them.
-        """
+    def _event_listener(self):
+        """Wait for messages from the exchange and call handle_message on each of them."""
         while True:
-            ready_socks,_,_ = select.select([self._iml_sock, self._eml_sock], [], [])
-            for socket in ready_socks:
-                data, addr = socket.recvfrom(1024)
+            ready_socks, _, _ = select.select([self._iml_sock, self._eml_sock], [], [])
+            for sock in ready_socks:
+                data, addr = sock.recvfrom(1024)
                 message = data.decode('utf-8')
                 try:
                     self._handle_message(message)
-                except Exception:
+                except (KeyError, ValueError):
                     print(f"Invalid message received: {message}")
+                except Exception as e:
+                    print(f"Error: {e}")
 
     def _read_replay_file(self):
-        header = self._replay_file_handler.readline()
+        _ = self._replay_file_handler.readline()  # Skip the header line
         for line in self._replay_file_handler:
             if line:
                 trade_time, feedcode, traded_price, traded_volume = line.split('|')
                 self._positions['feedcode'] += traded_volume
-        
+
     def _write_replay_file(self, feedcode, traded_price, traded_volume):
         self._replay_file_handler.write(
             f"{datetime.now().strftime('%H:%M:%S')}|{feedcode}|{traded_price}|{traded_volume}\n"
@@ -127,39 +137,26 @@ class BaseAutotrader:
             traded_volume = int(dict_message.get('TRADED_VOLUME', 0))
             if traded_price == 0 or traded_volume == 0:
                 print(f"Unable to get trade on: {dict_message['FEEDCODE']}")
-                return
-            print(f"[ORDER_ACK] feedcode: {dict_message['FEEDCODE']}, price: {traded_price}, volume: {traded_volume}")
+                self.on_order_failure(dict_message['FEEDCODE'])
+            else:
+                print(
+                    f"[ORDER_ACK] feedcode: {dict_message['FEEDCODE']}, price: {traded_price}, volume: {traded_volume}")
 
-            self._update_position(feedcode=dict_message['FEEDCODE'], traded_volume=traded_volume)
-            self._write_replay_file(
-                feedcode=dict_message['FEEDCODE'],
-                traded_price=traded_price,
-                traded_volume=traded_volume
-            )
-            self.on_trade_confirmation(
-                position_sp=self._positions.get('SP-FUTURE', 0),
-                position_esx=self._positions.get('ESX-FUTURE', 0),
-                feedcode=dict_message['FEEDCODE'],
-                traded_price=traded_price,
-                traded_volume=traded_volume
-            )
+                self._update_position(feedcode=dict_message['FEEDCODE'], traded_volume=traded_volume)
+                self._write_replay_file(
+                    feedcode=dict_message['FEEDCODE'],
+                    traded_price=traded_price,
+                    traded_volume=traded_volume
+                )
+                self.on_order_success(
+                    feedcode=dict_message['FEEDCODE'],
+                    traded_price=traded_price,
+                    traded_volume=traded_volume
+                )
         else:
             print(f"Message type not recognized: {message}")
 
-    def send_order(self, target_feedcode, action, target_price, volume):
-        """
-        Send an order to the exchange.
-
-        :param target_feedcode: The feedcode, either "SP-FUTURE" or "ESX-FUTURE"
-        :param action: "BUY" or "SELL"
-        :param target_price: Price you want to trade at
-        :param volume: Volume you want to trade at. Please start with 10 and go from there. Don't go crazy!
-        :return:
-
-        Example:
-        If you want to buy  100 SP-FUTURES at a price of 3000:
-        - send_order("SP-FUTURE", "BUY", 3000, 100)
-        """
+    def _send_order(self, target_feedcode, action, target_price, volume):
         order_message = (
             f"TYPE=ORDER|USERNAME={self._username}|PASSWORD={self._password}|FEEDCODE={target_feedcode}|ACTION={action}"
             f"|PRICE={target_price}|VOLUME={volume}"
@@ -173,6 +170,8 @@ class BaseAutotrader:
     def on_trade_tick(self, feedcode, side, traded_price, traded_volume):
         raise NotImplementedError
 
-    def on_trade_confirmation(self, position_sp, position_esx, feedcode, traded_price, traded_volume):
+    def on_order_failure(self, feedcode):
         raise NotImplementedError
 
+    def on_order_success(self, feedcode, traded_price, traded_volume):
+        raise NotImplementedError
