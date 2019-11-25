@@ -2,7 +2,7 @@
 
 **VERY IMPORTANT**: Come by our booth to get login credentials for the exchange.
 
-Look at your positions here: http://178.62.36.224:5006/optitrade
+Look at your positions here: http://18.197.147.155:5006/optitrade
 
 During this challenge, you will be listening to an exchange, analyse its data and then,
 if you'd like, develop an automated trading system. Of course you are also welcome to
