@@ -1,11 +1,11 @@
 import socket
 import select
 
-REMOTE_IP = "178.62.36.224"
+REMOTE_IP = "172.31.18.231"
 UDP_ANY_IP = ""
 
-USERNAME = "optiver-python-template"
-PASSWORD = "password-goes-here"
+USERNAME = "Team01"
+PASSWORD = "KQMCxSEd"
 
 
 # -------------------------------------
