@@ -12,7 +12,7 @@ from the outside world are made (this is simulated). Your goal is to implement a
 strategies to (hopefully) make money!
 
 
-## The Exchange
+### The Exchange
 
 The system is composed by:
 
