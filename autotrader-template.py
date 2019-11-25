@@ -4,8 +4,8 @@ import select
 REMOTE_IP = "172.31.18.231"
 UDP_ANY_IP = ""
 
-USERNAME = "Team01"
-PASSWORD = "KQMCxSEd"
+USERNAME = "TeamXX"
+PASSWORD = ""
 
 
 # -------------------------------------
