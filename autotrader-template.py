@@ -46,28 +46,32 @@ class Autotrader(BaseAutotrader):
         self._send_order(target_feedcode, action, target_price, target_volume)
 
     def on_price_update(self, feedcode: str, bid_price: float, bid_volume: int, ask_price: float, ask_volume: int):
-        """This is where you write code to react to price updates. Due to a trade tick or someone inserting a quote,
-         there is a change in the order book. Here, you receive the current state of the most competitive bid and ask -
-         also known as top of the book (TOB) update. You may to react to those TOB updates.
+        """
+        This is where you write code to react to price updates. Due to a trade tick or someone inserting a quote,
+        there is a change in the order book. Here, you receive the current state of the most competitive bid and ask -
+        also known as top of the book (TOB) update. You may to react to those TOB updates.
         """
         pass
 
     def on_trade_tick(self, feedcode: str, side: str, traded_price: float, traded_volume: int):
-        """This is where you write code to react to exchange trade ticks. There is a trade on an instrument at the
-         exchange - it does not necessarily belong to you. You may to react to that information.
+        """
+        This is where you write code to react to exchange trade ticks. There is a trade on an instrument at the
+        exchange - it does not necessarily belong to you. You may to react to that information.
         """
         pass
 
     def on_order_success(self, feedcode: str, traded_price: float, traded_volume: int):
-        """This is where you write code to react to a successful order confirmation. Your order was successful,
-         exchange confirms the traded price and volume - may not be same as your order volum- to you in a message.        
+        """
+        This is where you write code to react to a successful order confirmation. Your order was successful,
+        exchange confirms the traded price and volume - may not be same as your order volume - to you in a message.
         """
         pass
 
     def on_order_failure(self, feedcode: str):
-        """This is where you write code to react - if you want - to failure of your order. You did not get any trade.
-         Perhaps you were too late/slow, or the target price you sent was not available. You can also react to this
-         information.
+        """
+        This is where you write code to react - if you want - to failure of your order. You did not get any trade.
+        Perhaps you were too late/slow, or the target price you sent was not available. You can also react to this
+        information.
         """
         pass
 
