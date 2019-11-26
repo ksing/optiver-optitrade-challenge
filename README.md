@@ -1,6 +1,6 @@
 # Optiver OptiTrade Challenge
 
-Look at your positions here: http://18.197.147.155:5006/optitrade
+Look at your positions here: http://18.185.112.43:5006/optitrade
 
 During this challenge, you will be listening to an exchange, analyse its data and then
 develop an automated trading system.
