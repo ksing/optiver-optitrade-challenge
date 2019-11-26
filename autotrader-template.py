@@ -63,7 +63,7 @@ class Autotrader(BaseAutotrader):
     def on_order_success(self, feedcode: str, traded_price: float, traded_volume: int):
         """
         This is where you write code to react to a successful order confirmation. Your order was successful,
-        exchange confirms the traded price and volume - may not be same as your order volum- to you in a message.
+        exchange confirms the traded price and volume - may not be same as your order volume - to you in a message.
         """
         pass
 
