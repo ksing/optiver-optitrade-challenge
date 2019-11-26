@@ -25,12 +25,9 @@ The system is composed by:
 
     This tells you simulated trades on the exchange (only), at which price and for how much volume.
 
-### Measure Your Performance
+### Manage Your Risk
 
-Trading is one thing, but of course you also want to know how much money you have made or lost, and how much risk you're taking.
-For that, it might be smart to track your own profit and loss (PnL), alongside your positions (which is your risk).
-
-You can also look at your official PnL [here](http://18.197.147.155:5006/optitrade).
+Sending orders is one thing, but you also want to know how much risk you're taking **&mdash; every trade will impact your position**. We already provide you with basic functionality to look at your positions, so think about how you can use that to control your risk and avoid going bankrupt. This is important!
 
 
 ### Bankruptcy
@@ -41,6 +38,4 @@ wisely to rethink your strategy and feel free to ask the Optiverians for help!
 
 After these 5 minutes, you'll start again with 20,000 euros.
 
-**All of you are trading on the same exchange, which means that you will compete for the same opportunities...**
-
-**Last thing: every trade will impact your position &mdash; keep an eye on it to manage your risk exposure!**
+**Last thing: All of you are trading on the same exchange, which means that you will compete for the same opportunities...**
