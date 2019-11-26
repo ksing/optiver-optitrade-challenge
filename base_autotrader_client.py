@@ -91,7 +91,7 @@ class BaseAutotrader:
         for line in self._replay_file_handler:
             if line:
                 trade_time, feedcode, traded_price, traded_volume = line.split('|')
-                self._positions['feedcode'] += traded_volume
+                self._positions['feedcode'] += int(traded_volume)
 
     def _write_replay_file(self, feedcode: str, traded_price: float, traded_volume: int):
         self._replay_file_handler.write(
