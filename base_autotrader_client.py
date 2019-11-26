@@ -36,7 +36,7 @@ class BaseAutotrader:
 
         if not os.path.isfile(replay_file):
             with open(replay_file, 'w+') as f:
-                f.write('TradeTime|Feedcode|TradedPrice|TradedVolume')
+                f.write('TradeTime|Feedcode|TradedPrice|TradedVolume\n')
 
         self._replay_file_handler = open(replay_file, 'r+')
 
@@ -83,6 +83,10 @@ class BaseAutotrader:
                     self._handle_message(message)
                 except (KeyError, ValueError):
                     print(f"Invalid message received: {message}")
+                except KeyboardInterrupt:
+                    print("[EXIT] Program terminated by user.")
+                    self._replay_file_handler.close()
+                    break
                 except Exception as e:
                     print(f"Error: {e}")
 
