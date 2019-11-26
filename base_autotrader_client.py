@@ -75,20 +75,20 @@ class BaseAutotrader:
     def _event_listener(self):
         """Wait for messages from the exchange and call handle_message on each of them."""
         while True:
-            ready_socks, _, _ = select.select([self._iml_sock, self._eml_sock], [], [])
-            for sock in ready_socks:
-                data, addr = sock.recvfrom(1024)
-                message = data.decode('utf-8')
-                try:
+            try:
+                ready_socks, _, _ = select.select([self._iml_sock, self._eml_sock], [], [])
+                for sock in ready_socks:
+                    data, addr = sock.recvfrom(1024)
+                    message = data.decode('utf-8')
                     self._handle_message(message)
-                except (KeyError, ValueError):
-                    print(f"Invalid message received: {message}")
-                except KeyboardInterrupt:
-                    print("[EXIT] Program terminated by user.")
-                    self._replay_file_handler.close()
-                    break
-                except Exception as e:
-                    print(f"Error: {e}")
+            except (KeyError, ValueError):
+                print(f"Invalid message received: {message}")
+            except KeyboardInterrupt:
+                print("[EXIT] Program terminated by user.")
+                self._replay_file_handler.close()
+                break
+            except Exception as e:
+                print(f"Error: {e}")
 
     def _read_replay_file(self):
         _ = self._replay_file_handler.readline()  # Skip the header line
