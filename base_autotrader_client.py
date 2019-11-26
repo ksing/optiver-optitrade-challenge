@@ -81,8 +81,8 @@ class BaseAutotrader:
                     data, addr = sock.recvfrom(1024)
                     message = data.decode('utf-8')
                     self._handle_message(message)
-            except (KeyError, ValueError):
-                print(f"Invalid message received: {message}")
+            except (KeyError, ValueError) as e:
+                print(f"Invalid message received: {e}")
             except KeyboardInterrupt:
                 print("[EXIT] Program terminated by user.")
                 self._replay_file_handler.close()
